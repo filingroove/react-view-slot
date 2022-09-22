@@ -1,6 +1,6 @@
 {
-  "name": "react-view-slot",
-  "version": "1.0.2",
+  "name": "@filingroove/react-view-slot",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": {
@@ -9,7 +9,12 @@
     "url": "https://github.com/robik"
   },
   "description": "Dynamic view slots for React",
-  "keywords": ["react", "view", "plug", "slot"],
+  "keywords": [
+    "react",
+    "view",
+    "plug",
+    "slot"
+  ],
   "license": "MIT",
   "scripts": {
     "watch": "tsc --watch -p tsconfig.json",
