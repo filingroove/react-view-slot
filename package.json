@@ -1,6 +1,6 @@
 {
   "name": "react-view-slot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": {
@@ -17,7 +17,7 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "react": "^16.8"
+    "react": "^16.8 | ^17.0.0 | ^18.0.0"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
