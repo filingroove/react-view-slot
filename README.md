@@ -1,12 +1,8 @@
-# react-view-slot
+# @filingroove/react-view-slot
 
-`react-view-slot` is a small utility library that allows you to render inside another component space within same react component tree.
-Allowing for more modular approach in your applications.
+`@filingroove/react-view-slot` is a small utility library that allows you to render inside another component space within same react component tree. Allowing for more modular approach in your applications.
 
-
-![license](https://img.shields.io/npm/l/react-view-slot?style=flat-square)
-![version](https://img.shields.io/npm/v/react-view-slot.svg?style=flat-square)
-
+> This is a fork or the original library made to work with newer versions of React.
 
 ## Table of Contents
 
@@ -31,20 +27,20 @@ Allowing for more modular approach in your applications.
 Install using your package manager:
 
 ```
-npm install --save react-view-slot
+npm install --save @filingroove/react-view-slot
 
-yarn add react-view-slot
+yarn add @filingroove/react-view-slot
 ```
 
 ## Requirements
 
-`react-view-slot` uses React Hooks, and thus requires `react >= 16.8`.
+The latest version compatible with `React < 18` is `1.0.6` and it worked for me just fine. I will not maintain a v1 branch. Version 2 is only for `React@^18`
 
 ## Overview
 
 ![Overview image](.github/overview.png)
 
-`react-view-slot` provides you with a notion of a `Slot` and a `Plug`.
+`@filingroove/react-view-slot` provides you with a notion of a `Slot` and a `Plug`.
 
 ### Slots
 
@@ -90,7 +86,7 @@ simply want to have a modular design.
 `react-slot-view` use React context under the hood, therefore a provider is required to work.
 
 ```typescript jsx
-import { SlotProvider } from 'react-view-slot';
+import { SlotProvider } from '@filingroove/react-view-slot';
 
 const Application = () => (
   <SlotProvider>
@@ -103,7 +99,7 @@ After adding the provider, create a pair of `Slot` and `Plug` components.
 To do this you can use `createSlotAndPlug` function:
 
 ```typescript jsx
-import {createSlotAndPlug} from 'react-view-slot';
+import {createSlotAndPlug} from '@filingroove/react-view-slot';
 
 // Create a pair of slot and plug
 const [HeaderSlot, HeaderPlug] = createSlotAndPlug('header');

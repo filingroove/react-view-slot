@@ -1,15 +1,12 @@
-{
-  "extends": [
-    "react-app",
-    "airbnb",
-    "plugin:react/recommended",
-    "plugin:jsx-a11y/strict"
+module.exports = {
+  'plugins': [
+    'react',
+    '@typescript-eslint'
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "react-hooks",
-    "jsx-a11y"
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   "parser": "@typescript-eslint/parser",
   "rules": {

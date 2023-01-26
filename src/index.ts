@@ -1,1 +1,10 @@
-export { SlotProvider, createSlot, createSlotAndPlug, Plug, Slot, SlotProps, PlugProps, PlugInstance } from './slots';
+export {
+  SlotProvider,
+  createSlot,
+  createSlotAndPlug,
+  Plug,
+  Slot,
+  SlotProps,
+  PlugProps,
+  PlugInstance
+} from './slots';

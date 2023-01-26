@@ -1,37 +1,48 @@
-import * as React from 'react';
-import {render, shallow} from 'enzyme';
+/**
+ * @jest-environment jsdom
+ */
+import * as React from 'react'
+import { render, screen } from '@testing-library/react'
 
 import { Slot, Plug } from "../src";
-import {SlotProvider} from "../src/slots";
+import { SlotProvider } from "../src/slots";
 
-describe('<Plug />', () => {
-  it('requires context', () => {
-    expect(() => (
-      shallow(<Plug id="test"/>)
-    )).toThrow()
-  });
+test('<Plug /> should require context', () => {
+  expect(() => {
+    render(
+      <Plug slot="test" id="test">
+        test
+      </Plug>
+    );
+  }).toThrow(/usePlug hook outside of/)
 });
 
 
-describe('<Slot />', () => {
-  it('requires context', () => {
-    expect(() => (
-      shallow(<Slot name="test"/>)
-    )).toThrow()
-  });
+test('<Slot /> should require context', () => {
+  expect(() => {
+    render(<Slot name="test"/>)
+  }).toThrow(/useSlot hook outside of/)
+});
 
-  it('passes params', () => {
-    render(
-      <SlotProvider>
-        <Slot name="test" params={{text: "test", number: 1234}} />
-        <Plug name="test" id="foo">
-          {({text, number}) => (
-            <div id="plug">
-              {text}{number}
-            </div>
-          )}
-        </Plug>
-      </SlotProvider>
-    )
-  });
+test('<Slot /> passes params to children', () => {
+  const params = {
+    text: "test",
+    number: 1234
+  };
+
+  render(
+    <SlotProvider>
+      <Slot<typeof params> name="test" params={params} />
+      <Plug<typeof params> slot="test" id="foo">
+        {({text, number}) => (
+          <div data-testid="plug">
+            {text} {number}
+          </div>
+        )}
+      </Plug>
+    </SlotProvider>
+  );
+
+  expect(screen.getByTestId('plug').textContent)
+    .toBe(`${ params.text } ${ params.number }`)
 });

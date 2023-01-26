@@ -44,7 +44,7 @@
  * @see SlotProvider
  */
 import * as React from 'react';
-import sortBy from 'lodash.sortby';
+import { sortBy } from 'lodash';
 
 
 /**
@@ -194,7 +194,7 @@ export interface SlotProps<P = undefined, R = React.ReactElement> {
  *    )}
  *  </Slot>
  */
-export function Slot<T>(props: React.PropsWithoutRef<SlotProps<T>>) {
+export function Slot<T extends {}>(props: React.PropsWithoutRef<SlotProps<T>>) {
   const {name, maxCount, reversed, children, params, ...rest} = props;
   let slots = useSlot(name);
 
@@ -261,7 +261,7 @@ export function usePlug<T = {}, R = React.ReactElement>(
       setPlug(slot, id, renderer as PlugInstance<any, any>);
       return () => removePlug(slot, id);
     },
-    deps, // eslint-disable-line react-hooks/exhaustive-deps
+    deps
   );
 }
 
@@ -292,8 +292,6 @@ export interface PlugProps<P = {}, R = React.ReactElement> extends PlugOptions {
   deps?: any[];
 }
 
-type Plug<P = {}, R = React.ReactElement> = React.FC<PlugProps<P, R>>;
-
 /**
  * Plug component.
  *
@@ -312,7 +310,7 @@ type Plug<P = {}, R = React.ReactElement> = React.FC<PlugProps<P, R>>;
  * @param children Contents to mount to slot
  * @param options Additional plug options
  */
-export const Plug: Plug = ({ slot, id, deps = [], children, ...options }) => {
+export function Plug<P = {}, R = React.ReactElement>({ slot, id, deps = [], children, ...options }: PlugProps<P, R>) {
   const renderer = (typeof children === 'function') ? children : () => children! as any;
   usePlug(slot, id, renderer as any, deps, options);
   return null;
@@ -344,7 +342,8 @@ export function createSlot<P, R = React.ReactElement>(name: string): BoundSlotCo
 }
 
 function createPlugComponent<P, R>(slotName: string): BoundPlugComponent<P, R> {
-  const plugComponent: BoundPlugComponent<P, R> = (props) => React.createElement(Plug, { slot: slotName, ...props });
+  const plugComponent: BoundPlugComponent<P, R> =
+    (props) => React.createElement<PlugProps<P,R>>(Plug, { slot: slotName, ...props });
   plugComponent.displayName = `Slot(${slotName})`;
   return plugComponent;
 }
@@ -362,12 +361,22 @@ export function createSlotAndPlug<P = {}, R = React.ReactElement>(name: string)
   return [boundSlot, boundSlot.Plug];
 }
 
+type SlotProviderProps = {
+  /**
+   * Since React version 18, it is required to specify
+   * the component accepting `children` explicitly
+   *
+   * https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-typescript-definitions
+   * */
+  children?: React.ReactNode;
+}
+
 /**
  * Component that provides slot and plugs context down the component tree.
  *
  * This component is required for `Plug` and `Slot` components to work.
  */
-export const SlotProvider: React.FC = ({children}) => {
+export const SlotProvider: React.FC<SlotProviderProps> = ({children}) => {
   const setPlug = (slot: string, id: string, renderer: PlugInstance) => {
     Object.assign(renderer, {id});
 
