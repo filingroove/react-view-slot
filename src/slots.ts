@@ -44,7 +44,7 @@
  * @see SlotProvider
  */
 import * as React from 'react';
-import { sortBy } from 'lodash';
+import sortBy from 'lodash/sortBy';
 
 
 /**
